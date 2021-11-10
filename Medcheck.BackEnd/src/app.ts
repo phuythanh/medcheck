@@ -10,8 +10,10 @@ import { createConnection } from "typeorm";
 import { useContainer as ormUseContainer } from "typeorm";
 import { Container as extensionsContainer } from "typeorm-typedi-extensions";
 import { join } from "path";
-import { User } from "./entity/User";
-import { Category } from "./entity/Category";
+import { UserEntity } from "./entities/UserEntity";
+import { authorizationChecker } from "./auth/authorizationChecker";
+import { currentUserChecker } from "./auth/currentUserChecker";
+import { hashPassword } from "./utils/common";
 
 routingUseContainer(Container);
 ormUseContainer(Container);
@@ -25,27 +27,23 @@ createConnection()
       routePrefix: "/api",
       // controllers: [UserController], // we specify controllers we want to use
       controllers: [join(__dirname, "/controllers/*.ts")],
+      authorizationChecker: authorizationChecker(),
+      currentUserChecker: currentUserChecker(),
     });
 
-    // run express application on port 3000
-    app.listen(3000);
-    await connection.manager.save(
-      connection.manager.create(User, {
-        firstName: "Timber",
-        lastName: "Saw",
-      })
-    );
-    await connection.manager.save(
-      connection.manager.create(User, {
-        firstName: "Phantom",
-        lastName: "Assassin",
-      })
-    );
-    await connection.manager.save(
-      connection.manager.create(Category, {
-        title: "Phantom",
-        description: "Assassin",
-      })
-    );
+    // run express application on port 3100
+    // app.listen(3100);
+    // const hasUser = await connection.manager.count(UserEntity, {
+    //   email: "phuythanh@gmail.com",
+    // });
+    // if (!hasUser) {
+    //   const hashPasswordValue = await hashPassword("123456");
+    //   await connection.manager.save(
+    //     connection.manager.create(UserEntity, {
+    //       email: "phuythanh@gmail.com",
+    //       password: hashPasswordValue,
+    //     })
+    //   );
+    // }
   })
   .catch((error) => console.log(error));

@@ -8,15 +8,25 @@ import {
   Delete,
   Authorized,
 } from "routing-controllers";
+import { ResponseSchema } from "routing-controllers-openapi";
 import { Service } from "typedi";
+import { UserService } from "../services/UserService";
+
+export class UserResponse {
+  public id: number;
+  public email: string;
+}
 
 // @Authorized()
 @Service()
-@JsonController('/users')
+@JsonController("/users")
 export class UserController {
+  constructor(private userService: UserService) {}
   @Get("")
+  @ResponseSchema(UserResponse, { isArray: true })
   getAll() {
-    return "This action returns all users";
+    const users = this.userService.find();
+    return users;
   }
 
   @Get("/:id")
