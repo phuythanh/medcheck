@@ -1,8 +1,7 @@
 # Medcheck
 
 Steps to run this project:
-Frontend:
-Go to Medcheck.FrontEnd
 
-Backend:
-Go to Medcheck.BackEnd
+1. Frontend: Go to Medcheck.FrontEnd
+
+2. Backend: Go to Medcheck.BackEnd
