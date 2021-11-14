@@ -8,6 +8,8 @@ import {
   Put,
   Delete,
   Authorized,
+  NotFoundError,
+  BadRequestError,
 } from "routing-controllers";
 import { ResponseSchema } from "routing-controllers-openapi";
 import { Service } from "typedi";
@@ -17,6 +19,7 @@ import { UserService } from "../services/UserService";
 export class AuthResponse {
   public type: string;
   public token: string;
+  public email: string;
 }
 
 export class AuthRequest {
@@ -40,9 +43,14 @@ export class AuthController {
       request.email,
       request.password
     );
+    if (!token) {
+      throw new BadRequestError(`User was not found.`); // message is optional
+    }
+
     const result: AuthResponse = {
       token: token,
       type: "Bearer",
+      email: request.email,
     };
     return result;
   }

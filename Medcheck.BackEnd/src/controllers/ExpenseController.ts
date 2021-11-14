@@ -29,8 +29,6 @@ export class ExpenseRequest {
   @IsNotEmpty()
   public title: string;
   @IsNotEmpty()
-  public date: Date;
-  @IsNotEmpty()
   public value: number;
   @IsNotEmpty()
   public categoryId: number;
@@ -47,6 +45,15 @@ export class ExpenseController {
     return this.ExpenseService.findByUser(user);
   }
 
+  @Get("/filter")
+  @ResponseSchema(ExpenseResponse, { isArray: true })
+  async filter(@CurrentUser() user: UserEntity) {
+    const now = new Date();
+    now.setDate(-30);
+    now.setHours(0, 0, 0);
+    return this.ExpenseService.findByUserAndDate(user, now);
+  }
+
   @ResponseSchema(ExpenseResponse)
   @Get("/:id")
   getOne(@Param("id") id: number): Promise<ExpenseResponse> {
@@ -56,10 +63,13 @@ export class ExpenseController {
   @Post("")
   @ResponseSchema(ExpenseResponse)
   post(@Body() request: ExpenseRequest, @CurrentUser() user: UserEntity) {
+    const now = new Date();
+    now.setHours(0, 0, 0);
     const Expense: ExpenseEntity = {
       id: 0,
       ...request,
       userId: user.id,
+      date: now,
     };
     return this.ExpenseService.create(Expense);
   }
@@ -74,6 +84,7 @@ export class ExpenseController {
       id: 0,
       ...request,
       userId: user.id,
+      date: new Date(),
     };
     return this.ExpenseService.update(id, Expense);
   }

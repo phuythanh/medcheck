@@ -1,0 +1,100 @@
+{
+  "name": "remitano-test",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.3.0",
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@fontsource/roboto": "^4.5.1",
+    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@mui/icons-material": "^5.1.0",
+    "@mui/lab": "^5.0.0-alpha.54",
+    "@mui/material": "^5.1.0",
+    "@mui/x-data-grid": "^5.0.0-beta.7",
+    "@reduxjs/toolkit": "^1.5.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.9",
+    "@types/react": "^17.0.29",
+    "@types/react-dom": "^17.0.9",
+    "autoprefixer": "^9",
+    "axios": "^0.24.0",
+    "formik": "^2.2.9",
+    "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "postcss": "^7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.3",
+    "react-router-dom": "^5.3.0",
+    "react-toastify": "^8.0.3",
+    "react-vis": "^1.11.7",
+    "react-youtube": "^7.13.1",
+    "save-dev": "^0.0.1-security",
+    "typescript": "^4.4.4",
+    "yup": "^0.32.11"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "lint-fix": "eslint ./ --fix",
+    "format": "prettier --write \"**/*.{tsx,js,jsx,json,md}\""
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.29",
+    "@types/react-router": "^5.1.13",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-vis": "^1.11.10",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.2.1",
+    "react-scripts": "latest"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "prettier"
+    ],
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:react/recommended",
+      "plugin:prettier/recommended",
+      "prettier"
+    ],
+    "rules": {
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off",
+      "react/self-closing-comp": [
+        "error",
+        {
+          "component": true,
+          "html": true
+        }
+      ],
+      "prettier/prettier": 2
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 120,
+    "endOfLine": "auto"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

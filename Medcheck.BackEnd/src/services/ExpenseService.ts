@@ -1,48 +1,60 @@
-import { Service } from 'typedi';
-import { InjectRepository } from 'typeorm-typedi-extensions';
-import { ExpenseEntity } from '../entities/ExpenseEntity';
-import { UserEntity } from '../entities/UserEntity';
-import { ExpenseRepository } from '../repositories/ExpenseRepository';
+import { Service } from "typedi";
+import { MoreThan, MoreThanOrEqual } from "typeorm";
+import { InjectRepository } from "typeorm-typedi-extensions";
+import { ExpenseEntity } from "../entities/ExpenseEntity";
+import { UserEntity } from "../entities/UserEntity";
+import { ExpenseRepository } from "../repositories/ExpenseRepository";
 
 @Service()
 export class ExpenseService {
+  constructor(
+    @InjectRepository()
+    private ExpenseRepository: ExpenseRepository
+  ) {}
 
-    constructor(
-        @InjectRepository() 
-        private ExpenseRepository: ExpenseRepository,
-    ) { }
+  public find(): Promise<ExpenseEntity[]> {
+    return this.ExpenseRepository.find();
+  }
 
-    public find(): Promise<ExpenseEntity[]> {
-        return this.ExpenseRepository.find();
-    }
+  public findByUser(user: UserEntity): Promise<ExpenseEntity[]> {
+    return this.ExpenseRepository.find({
+      where: {
+        userId: user.id,
+      },
+      relations: ["category"],
+    });
+  }
 
-    public findByUser(user: UserEntity): Promise<ExpenseEntity[]> {
-        return this.ExpenseRepository.find({
-            where: {
-                userId: user.id,
-            },
-            relations: ['category']
-        });
-    }
+  public findByUserAndDate(
+    user: UserEntity,
+    date: Date
+  ): Promise<ExpenseEntity[]> {
+    return this.ExpenseRepository.find({
+      where: {
+        userId: user.id,
+        date: MoreThanOrEqual(date),
+      },
+      relations: ["category"],
+    });
+  }
 
-    public findOne(id: number): Promise<ExpenseEntity | undefined> {
-        return this.ExpenseRepository.findOne({ id });
-    }
+  public findOne(id: number): Promise<ExpenseEntity | undefined> {
+    return this.ExpenseRepository.findOne({ id });
+  }
 
-    public async create(Expense: ExpenseEntity): Promise<ExpenseEntity> {
-        // Expense.id = uuid.v1();
-        const newExpense = await this.ExpenseRepository.save(Expense);
-        return newExpense;
-    }
+  public async create(Expense: ExpenseEntity): Promise<ExpenseEntity> {
+    // Expense.id = uuid.v1();
+    const newExpense = await this.ExpenseRepository.save(Expense);
+    return newExpense;
+  }
 
-    public update(id: number, Expense: ExpenseEntity): Promise<ExpenseEntity> {
-        Expense.id = id;
-        return this.ExpenseRepository.save(Expense);
-    }
+  public update(id: number, Expense: ExpenseEntity): Promise<ExpenseEntity> {
+    Expense.id = id;
+    return this.ExpenseRepository.save(Expense);
+  }
 
-    public async delete(id: number): Promise<void> {
-        await this.ExpenseRepository.delete(id);
-        return;
-    }
-
+  public async delete(id: number): Promise<void> {
+    await this.ExpenseRepository.delete(id);
+    return;
+  }
 }
