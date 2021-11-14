@@ -1,10 +1,8 @@
-# Awesome Project Build with TypeORM
+# Medcheck
 
 Steps to run this project:
+Frontend:
+Go to Medcheck.FrontEnd
 
-1. Run `yarn` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `yarn start` command
-   API: http://localhost:3100/docs/
-
-   ![alt text](https://ibb.co/vZNkySp)
+Backend:
+Go to Medcheck.BackEnd
